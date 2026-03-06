@@ -1,13 +1,19 @@
 import { NextResponse } from "next/server";
 
-export async function POST(req) {
+export async function POST(req: Request) {
   try {
     const { message, image } = await req.json();
     const apiKey = process.env.GEMINI_API_KEY;
 
+    if (!apiKey) {
+      console.error("FALTA LA API KEY EN VERCEL");
+      return NextResponse.json({ text: "Error de configuración. ||| Falta la API KEY en Vercel." });
+    }
+
+    // Asegúrate de que este modelo (gemini-2.5-flash) sea el correcto que tienes habilitado.
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
-    let parts = [];
+    let parts: any[] = [];
 
     if (image) {
       const base64Data = image.includes("base64,") ? image.split("base64,")[1] : image;
@@ -63,10 +69,18 @@ export async function POST(req) {
     });
 
     const data = await response.json();
+
+    // Capturador de errores en los Logs de Vercel
+    if (!response.ok) {
+      console.error("ERROR DE GEMINI API:", data);
+      return NextResponse.json({ text: `El chef está ocupado (Error API). ||| Revisa los Logs de Vercel.` });
+    }
+
     const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "El chef está ocupado. ||| Intenta de nuevo.";
 
     return NextResponse.json({ text: aiText });
   } catch (error) {
+    console.error("Error en el servidor:", error);
     return NextResponse.json({ text: "Error en la cocina digital ⚠️. ||| Revisa tu conexión." });
   }
 }
