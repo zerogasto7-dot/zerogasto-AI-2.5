@@ -231,7 +231,7 @@ export default function ZeroGastoApp() {
 
                     <div className="prose prose-invert max-w-none mt-6 text-white text-lg leading-relaxed normal-case font-medium font-serif">
                         {loading && !displayedText ? (
-                            <p>🔥 Calentando fogones... Analizando ingredientes...</p>
+                            <p>🔥 Calentando fogones... Analizando ingredientes....</p>
                         ) : (
                             <ReactMarkdown>{displayedText}</ReactMarkdown>
                         )}
