@@ -54,3 +54,9 @@ h1, h2, h3, strong, b {
 button {
   transition: all 0.2s ease;
 }
+
+/* Color específico para las letras del botón Descargar PDF */
+button span, .download-pdf-text {
+  color: #000000 !important; /* Negro para que resalte sobre el fondo claro */
+  font-weight: bold !important;
+}
