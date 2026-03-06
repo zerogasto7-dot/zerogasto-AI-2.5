@@ -232,7 +232,7 @@ export default function ZeroGastoApp() {
                     {loading && !displayedText && (
                       <div className="flex items-center gap-3 animate-fade-in">
                         <div className="spinner"></div>
-                        <p className="text-white font-bold tracking-tight">🔥 CALENTANDO FOGONES mm...</p>
+                        <p className="text-white font-bold tracking-tight">🔥 CALENTANDO FOGONES...</p>
                       </div>
                     )}
                     
