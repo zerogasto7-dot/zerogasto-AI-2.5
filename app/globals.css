@@ -5,7 +5,7 @@
 /* Añadimos un pequeño extra para que el fondo sea siempre oscuro */
 body {
   background-color: #050505;
-  color: rgb(69, 125, 135);
+  color: rgb(241, 245, 246);
 }
 /* Añade esto al final de tu globals.css */
 .glass-effect {
@@ -23,13 +23,14 @@ body {
   animation: fadeIn 0.3s ease-out forwards;
 }
 
-/* Color del texto que el usuario escribe */
+/* Esto pone el texto que escribes en blanco puro */
 textarea, input {
-  color: white !important;
-  background-color: #1a1a1a !important; /* Un fondo un poco más claro que el negro puro */
+  color: #ffffff !important;
+  background-color: #121212 !important; /* Un gris casi negro para que se vea el borde */
 }
 
-/* Color del texto de pista (placeholder) */
+/* Esto pone el texto de ejemplo (placeholder) en un gris claro legible */
 textarea::placeholder, input::placeholder {
-  color: #aaaaaa !important; 
+  color: #cccccc !important;
+  opacity: 1;
 }
