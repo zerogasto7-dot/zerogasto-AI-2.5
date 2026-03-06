@@ -2,19 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Añadimos un pequeño extra para que el fondo sea siempre oscuro */
+/* 1. Fondo y Base */
 body {
-  background-color: #050505;
-  color: rgb(241, 245, 246);
+  background-color: #000000; /* Negro puro para máximo contraste */
+  color: #ffffff;
 }
-/* Añade esto al final de tu globals.css */
+
+/* 2. Efecto Cristal para Tarjetas */
 .glass-effect {
   background: rgba(15, 15, 15, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(57, 255, 20, 0.3); /* Borde neón sutil */
 }
 
+/* 3. Animaciones */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -23,14 +25,32 @@ body {
   animation: fadeIn 0.3s ease-out forwards;
 }
 
-/* Esto pone el texto que escribes en blanco puro */
+/* 4. CAJÓN DE INGREDIENTES (Inputs) */
 textarea, input {
-  color: #ffffff !important;
-  background-color: #121212 !important; /* Un gris casi negro para que se vea el borde */
+  color: #ffffff !important; /* Texto que escribes en blanco */
+  background-color: #121212 !important;
+  border: 1px solid #333 !important;
 }
 
-/* Esto pone el texto de ejemplo (placeholder) en un gris claro legible */
 textarea::placeholder, input::placeholder {
-  color: #cccccc !important;
+  color: #aaaaaa !important; /* Texto de ejemplo legible */
   opacity: 1;
+}
+
+/* 5. CUERPO DE LA RECETA (Lo que genera la IA) */
+/* Forzamos blanco en párrafos y listas para que no se vea plomo */
+p, li, span, .recipe-body {
+  color: #ffffff !important;
+}
+
+/* 6. TÍTULOS EN VERDE NEÓN */
+/* Esto hará que el nombre del plato y secciones resalten */
+h1, h2, h3, strong, b {
+  color: #39FF14 !important; /* Verde Neón */
+  text-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
+}
+
+/* Ajuste para los iconos de botones si los usas */
+button {
+  transition: all 0.2s ease;
 }
