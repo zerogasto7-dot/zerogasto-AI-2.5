@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+// Antes: export async function POST(req: Request) {
+export async function POST(req) { // <--- ASÍ DEBE QUEDAR
   try {
     const { message, image } = await req.json();
     const apiKey = process.env.GEMINI_API_KEY;
