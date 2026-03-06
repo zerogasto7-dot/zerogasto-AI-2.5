@@ -229,16 +229,15 @@ export default function ZeroGastoApp() {
                         </button>
                     )}
 
-                    {/* RULETA CORREGIDA: Cambiado isLoading por loading */}
-                  {loading && !displayedText && (
-                    <div className="flex items-center gap-3">
-                      <div className="spinner"></div>
-                      <p className="text-white font-bold tracking-tight">🔥 CALENTANDO FOGONES... ANALIZANDO INGREDIENTES....</p>
-                    </div>
-                  )}
+                    {loading && !displayedText && (
+                      <div className="flex items-center gap-3 animate-fade-in">
+                        <div className="spinner"></div>
+                        <p className="text-white font-bold tracking-tight">🔥 CALENTANDO FOGONES... ANALIZANDO INGREDIENTES....</p>
+                      </div>
+                    )}
                     
                     {/* TEXTO DE LA RECETA EN BLANCO PURO */}
-                    <div className="prose prose-invert max-w-none text-white recipe-body">
+                    <div className="prose prose-invert max-w-none text-white normal-case recipe-body">
                       <ReactMarkdown>{displayedText}</ReactMarkdown>
                     </div>
 
