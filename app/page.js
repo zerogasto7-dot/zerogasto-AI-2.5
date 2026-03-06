@@ -229,19 +229,25 @@ export default function ZeroGastoApp() {
                         </button>
                     )}
 
-                    {isLoading && (
-                      <div className="flex items-center p-4">
-                        <div className="spinner"></div>
-                        <p className="text-white">🔥 CALENTANDO FOGONES... ANALIZANDO INGREDIENTES....</p>
-                      </div>
-                    )}
+                    {/* RULETA CORREGIDA: Cambiado isLoading por loading */}
+                  {loading && !displayedText && (
+                    <div className="flex items-center gap-3">
+                      <div className="spinner"></div>
+                      <p className="text-white font-bold tracking-tight">🔥 CALENTANDO FOGONES... ANALIZANDO INGREDIENTES....</p>
+                    </div>
+                  )}
                     
+                    {/* TEXTO DE LA RECETA EN BLANCO PURO */}
+                    <div className="prose prose-invert max-w-none text-white recipe-body">
+                      <ReactMarkdown>{displayedText}</ReactMarkdown>
+                    </div>
+
                     {showFinal && (
                         <div className="mt-8 pt-6 border-t border-white/10 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <span className="text-2xl">💡</span>
                         <div>
                             <p className="text-emerald-400 text-sm font-bold italic uppercase tracking-wider mb-1">Tip de Ahorro:</p>
-                            <p className="text-gray-300 text-sm normal-case">{extraTip}</p>
+                            <p className="text-white text-sm normal-case">{extraTip}</p>
                         </div>
                         </div>
                     )}
