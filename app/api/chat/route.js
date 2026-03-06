@@ -10,7 +10,7 @@ export async function POST(req) {
     }
 
     // Cambiamos el 2.5 por el 2.0 para que Google acepte la llamada
-const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`;
+const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-exp:generateContent?key=${apiKey}`;
 
     // SIN ": any[]", solo la variable limpia
     let parts = []; 
