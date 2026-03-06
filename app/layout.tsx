@@ -12,14 +12,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// 1. En metadata, elimina la línea de themeColor si la tienes
-export const metadata = {
+// Configuración de Metadata (Sin themeColor aquí)
+export const metadata: Metadata = {
   title: "ZeroGasto 2.5",
   description: "IA de aprovechamiento",
   manifest: "/manifest.json",
 };
 
-// 2. Agrega esta nueva exportación (Esto quita los avisos amarillos)
+// Nueva exportación Viewport (Esto quita los avisos de Vercel)
 export const viewport = {
   themeColor: "#000000",
   width: "device-width",
@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

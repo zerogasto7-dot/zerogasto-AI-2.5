@@ -230,9 +230,9 @@ export default function ZeroGastoApp() {
                     )}
 
                     {isLoading && (
-                      <div className="flex items-center p-4 animate-fade-in">
+                      <div className="flex items-center p-4">
                         <div className="spinner"></div>
-                        <p className="text-white font-medium">🔥 Calentando fogones... Analizando ingredientes....</p>
+                        <p className="text-white">🔥 CALENTANDO FOGONES... ANALIZANDO INGREDIENTES....</p>
                       </div>
                     )}
                     
