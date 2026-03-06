@@ -229,13 +229,11 @@ export default function ZeroGastoApp() {
                         </button>
                     )}
 
-                    <div className="prose prose-invert max-w-none mt-6 text-white text-lg leading-relaxed normal-case font-medium font-serif">
-                        {loading && !displayedText ? (
-                            <p>🔥 Calentando fogones... Analizando ingredientes....</p>
-                        ) : (
-                            <ReactMarkdown>{displayedText}</ReactMarkdown>
-                        )}
-                    </div>
+                    // Busca el lugar donde tienes el mensaje de carga y cámbialo por esto:
+<div className="flex items-center loading-container">
+  <div className="spinner"></div> 
+  <p className="text-white">🔥 Calentando fogones... Analizando ingredientes....</p>
+</div>
                     
                     {showFinal && (
                         <div className="mt-8 pt-6 border-t border-white/10 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700">

@@ -60,3 +60,25 @@ button span, .download-pdf-text {
   color: #000000 !important; /* Negro para que resalte sobre el fondo claro */
   font-weight: bold !important;
 }
+
+/* Animación de la ruleta (spinner) */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(57, 255, 20, 0.3); /* Verde neón suave */
+  border-radius: 50%;
+  border-top-color: #39FF14; /* Verde neón fuerte */
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Quitar la línea blanca vertical */
+.loading-container {
+  border-left: none !important; /* Esto elimina la línea de la imagen 708d3c */
+}
