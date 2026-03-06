@@ -1,20 +1,18 @@
 import { NextResponse } from "next/server";
 
-// Antes: export async function POST(req: Request) {
-export async function POST(req) { // <--- ASÍ DEBE QUEDAR
+export async function POST(req) {
   try {
     const { message, image } = await req.json();
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
-      console.error("FALTA LA API KEY EN VERCEL");
-      return NextResponse.json({ text: "Error de configuración. ||| Falta la API KEY en Vercel." });
+      return NextResponse.json({ text: "Error: Falta la API KEY en Vercel. ||| Configura las variables de entorno." });
     }
 
-    // Asegúrate de que este modelo (gemini-2.5-flash) sea el correcto que tienes habilitado.
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
 
-    let parts: any[] = [];
+    // SIN ": any[]", solo la variable limpia
+    let parts = []; 
 
     if (image) {
       const base64Data = image.includes("base64,") ? image.split("base64,")[1] : image;
@@ -64,24 +62,14 @@ export async function POST(req) { // <--- ASÍ DEBE QUEDAR
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ role: 'user', parts }]
-      })
+      body: JSON.stringify({ contents: [{ role: 'user', parts }] })
     });
 
     const data = await response.json();
-
-    // Capturador de errores en los Logs de Vercel
-    if (!response.ok) {
-      console.error("ERROR DE GEMINI API:", data);
-      return NextResponse.json({ text: `El chef está ocupado (Error API). ||| Revisa los Logs de Vercel.` });
-    }
-
-    const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "El chef está ocupado. ||| Intenta de nuevo.";
+    const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "El Chef está ocupado. ||| Intenta de nuevo.";
 
     return NextResponse.json({ text: aiText });
   } catch (error) {
-    console.error("Error en el servidor:", error);
-    return NextResponse.json({ text: "Error en la cocina digital ⚠️. ||| Revisa tu conexión." });
+    return NextResponse.json({ text: "Error en la cocina digital. ||| Revisa tu conexión." });
   }
 }
