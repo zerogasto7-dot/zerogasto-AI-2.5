@@ -12,10 +12,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// 1. Quita el themeColor de aquí
 export const metadata = {
-  title: "zerogasto-ai-2-5",
-  description: "Ahorra cocinando con IA",
-  manifest: "/manifest.json", // <--- Esta línea es la clave
+  title: "ZeroGasto 2.5",
+  description: "IA de aprovechamiento",
+  manifest: "/manifest.json",
+};
+
+// 2. Ponlo aquí (Esto quita los errores amarillos)
+export const viewport = {
   themeColor: "#000000",
 };
 
