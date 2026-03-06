@@ -19,6 +19,12 @@ export const metadata = {
   themeColor: "#000000",
 };
 
+export const viewport = {
+  themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

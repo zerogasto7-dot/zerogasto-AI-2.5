@@ -229,11 +229,12 @@ export default function ZeroGastoApp() {
                         </button>
                     )}
 
-                    // Busca el lugar donde tienes el mensaje de carga y cámbialo por esto:
-<div className="flex items-center loading-container">
-  <div className="spinner"></div> 
-  <p className="text-white">🔥 Calentando fogones... Analizando ingredientes....</p>
-</div>
+                    {isLoading && (
+                      <div className="flex items-center p-4 animate-fade-in">
+                        <div className="spinner"></div>
+                        <p className="text-white font-medium">🔥 Calentando fogones... Analizando ingredientes....</p>
+                      </div>
+                    )}
                     
                     {showFinal && (
                         <div className="mt-8 pt-6 border-t border-white/10 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700">
