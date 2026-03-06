@@ -9,7 +9,8 @@ export async function POST(req) {
       return NextResponse.json({ text: "Error: Falta la API KEY en Vercel. ||| Configura las variables de entorno." });
     }
 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+    // Cambiamos el 2.5 por el 2.0 para que Google acepte la llamada
+const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${apiKey}`;
 
     // SIN ": any[]", solo la variable limpia
     let parts = []; 
