@@ -1,0 +1,21 @@
+{
+  "name": "ZeroGasto 2.5 - IA",
+  "short_name": "ZeroGasto",
+  "description": "Generador inteligente de recetas de aprovechamiento",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": ""
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
