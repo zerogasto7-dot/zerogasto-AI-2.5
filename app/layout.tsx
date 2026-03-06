@@ -12,18 +12,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// 1. Quita el themeColor de aquí
+// 1. En metadata, elimina la línea de themeColor si la tienes
 export const metadata = {
   title: "ZeroGasto 2.5",
   description: "IA de aprovechamiento",
   manifest: "/manifest.json",
 };
 
-// 2. Ponlo aquí (Esto quita los errores amarillos)
-export const viewport = {
-  themeColor: "#000000",
-};
-
+// 2. Agrega esta nueva exportación (Esto quita los avisos amarillos)
 export const viewport = {
   themeColor: "#000000",
   width: "device-width",
