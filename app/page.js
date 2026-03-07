@@ -230,9 +230,10 @@ export default function ZeroGastoApp() {
                     )}
 
                     {loading && !displayedText && (
-                      <div className="flex items-center gap-3 animate-fade-in">
+                      <div className="flex items-center gap-3 animate-fade-in border-l-2 border-white h-8 pl-3"> 
+                        {/* El 'h-8' limita el tamaño de la línea vertical del borde izquierdo */}
                         <div className="spinner"></div>
-                        <p className="text-white font-bold tracking-tight">🔥 CALENTANDO FOGONES...</p>
+                        <p className="text-white font-bold tracking-tight">CALENTANDO FOGONES🔥...</p>
                       </div>
                     )}
                     
