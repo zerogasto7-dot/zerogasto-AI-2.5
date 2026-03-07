@@ -230,10 +230,16 @@ export default function ZeroGastoApp() {
                     )}
 
                     {loading && !displayedText && (
-                      <div className="flex items-center gap-3 animate-fade-in border-l-2 border-white h-8 pl-3"> 
-                        {/* El 'h-8' limita el tamaño de la línea vertical del borde izquierdo */}
+                      <div className="flex items-center gap-3 animate-fade-in pl-1">
+                        {/* Esta es la NUEVA línea única, ajustada al tamaño del spinner (h-6) */}
+                        <div className="w-[2px] h-6 bg-white/50 rounded-full"></div>
+                        
+                        {/* Tu ruleta (spinner) */}
                         <div className="spinner"></div>
-                        <p className="text-white font-bold tracking-tight">CALENTANDO FOGONES🔥...</p>
+                        
+                        <p className="text-white font-bold tracking-tight uppercase">
+                          🔥 Calentando fogones...
+                        </p>
                       </div>
                     )}
                     
