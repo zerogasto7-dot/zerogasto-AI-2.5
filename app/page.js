@@ -229,12 +229,12 @@ export default function ZeroGastoApp() {
                         </button>
                     )}
 
-                    <div className="flex items-center gap-3 animate-fade-in pl-1">
-                      {/* Esta es la ÚNICA línea que queremos (la pequeña de 24px) */}
-                      <div className="w-[2px] h-6 bg-white/50 rounded-full"></div>
-                      <div className="spinner"></div>
-                      <p> CALENTANDO FOGONES... 🔥</p>
-                    </div>
+                    {loading && (
+                      <div className="border-l-2 border-white ..."> {/* <--- ¡ESTA ES LA LÍNEA! */}
+                        <div className="spinner"></div>
+                        <p>🔥 CALENTANDO FOGONES...</p>
+                      </div>
+                    )}
                     
                     {/* TEXTO DE LA RECETA EN BLANCO PURO */}
                     <div className="prose prose-invert max-w-none text-white normal-case recipe-body">
