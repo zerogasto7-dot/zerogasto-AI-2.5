@@ -237,7 +237,7 @@ export default function ZeroGastoApp() {
                             <div className="spinner"></div>
                             
                             <p className="text-white font-bold tracking-tight uppercase">
-                                 Calentando fogones M🔥M
+                                 Calentando fogones M🔥C
                             </p>
                           </div>
                         )}
@@ -246,7 +246,7 @@ export default function ZeroGastoApp() {
                           <ReactMarkdown>{displayedText}</ReactMarkdown>
                         </div>
                       </div>
-                    </div>
+                    </div> {/* <--- ASEGÚRATE DE QUE ESTOS DIVS ESTÉN CERRADOS */}
 
                     {showFinal && (
                         <div className="mt-8 pt-6 border-t border-white/10 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -256,8 +256,7 @@ export default function ZeroGastoApp() {
                             <p className="text-white text-sm normal-case">{extraTip}</p>
                         </div>
                         </div>
-                    )}
-                  </div>
+                      </div>
 
                   {/* BOTÓN DE DESCARGA PDF */}
                   {showFinal && (
