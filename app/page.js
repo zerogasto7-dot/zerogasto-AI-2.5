@@ -238,7 +238,7 @@ export default function ZeroGastoApp() {
                         <div className="spinner"></div>
                         
                         <p className="text-white font-bold tracking-tight uppercase">
-                          🔥 Calentando fogones...
+                          🔥 Calentando fogones 🔥...
                         </p>
                       </div>
                     )}
