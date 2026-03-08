@@ -229,10 +229,18 @@ export default function ZeroGastoApp() {
                         </button>
                     )}
 
-                    {loading && (
-                      <div className="border-l-2 border-white ..."> {/* <--- ¡ESTA ES LA LÍNEA! */}
+                    {loading && !displayedText && (
+                      <div className="flex items-center gap-3 animate-fade-in pl-1"> 
+                        {/* 1. Quitamos cualquier clase de border-l aquí arriba */}
+                        
+                        {/* 2. Esta es tu NUEVA línea pequeña controlada (h-6) */}
+                        <div className="w-[2px] h-6 bg-white/50 rounded-full"></div>
+                        
                         <div className="spinner"></div>
-                        <p>🔥 CALENTANDO FOGONES...</p>
+                        
+                        <p className="text-white font-bold tracking-tight uppercase">
+                          🔥 Calentando fogones 🔥...
+                        </p>
                       </div>
                     )}
                     
