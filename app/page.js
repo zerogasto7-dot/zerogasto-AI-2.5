@@ -220,17 +220,8 @@ export default function ZeroGastoApp() {
           
           {(displayedText || loading) && (
             <div className="flex-1 space-y-4">
-                
-                <div className="flex flex-col gap-4">
-                  <div id="receta-content" className="bg-zinc-900/50 p-8 rounded border-l-4 border-emerald-500 relative min-h-[300px]">
-                    {showFinal && (
-                        <button onClick={toggleSpeech} className={`absolute top-4 right-4 p-2 rounded-full transition-all ${isSpeaking ? 'bg-red-500 text-white animate-pulse' : 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black'}`} title={isSpeaking ? "Detener" : "Leer receta"}>
-                        {isSpeaking ? '🔇 DETENER' : '🔊 LEER'}
-                        </button>
-                    )}
-
+    
                     <div className="flex flex-col gap-4">
-                      {/* Quitamos 'border-l-4' y 'border-emerald-500' de aquí abajo */}
                       <div id="receta-content" className="bg-zinc-900/50 p-8 rounded relative min-h-[300px]">
                         {showFinal && (
                             <button onClick={toggleSpeech} className={`absolute top-4 right-4 p-2 rounded-full transition-all ${isSpeaking ? 'bg-red-500 text-white animate-pulse' : 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black'}`} title={isSpeaking ? "Detener" : "Leer receta"}>
@@ -246,7 +237,7 @@ export default function ZeroGastoApp() {
                             <div className="spinner"></div>
                             
                             <p className="text-white font-bold tracking-tight uppercase">
-                                🔥 Calentando fogones...
+                                 Calentando fogones M🔥M
                             </p>
                           </div>
                         )}
@@ -255,11 +246,6 @@ export default function ZeroGastoApp() {
                           <ReactMarkdown>{displayedText}</ReactMarkdown>
                         </div>
                       </div>
-                    </div>
-                    
-                    {/* TEXTO DE LA RECETA EN BLANCO PURO */}
-                    <div className="prose prose-invert max-w-none text-white normal-case recipe-body">
-                      <ReactMarkdown>{displayedText}</ReactMarkdown>
                     </div>
 
                     {showFinal && (
