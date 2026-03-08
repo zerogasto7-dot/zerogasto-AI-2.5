@@ -237,7 +237,7 @@ export default function ZeroGastoApp() {
                             <div className="spinner"></div>
                             
                             <p className="text-white font-bold tracking-tight uppercase">
-                                 Calentando fogones M🔥C
+                                 Calentando fogones M🔥Z
                             </p>
                           </div>
                         )}
@@ -254,7 +254,6 @@ export default function ZeroGastoApp() {
                         <div>
                             <p className="text-emerald-400 text-sm font-bold italic uppercase tracking-wider mb-1">Tip de Ahorro:</p>
                             <p className="text-white text-sm normal-case">{extraTip}</p>
-                        </div>
                         </div>
                       </div>
 
