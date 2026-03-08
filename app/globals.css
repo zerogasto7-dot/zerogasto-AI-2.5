@@ -78,18 +78,6 @@ button span, .download-pdf-text {
   to { transform: rotate(360deg); }
 }
 
-/* Quitar la línea blanca vertical */
-.loading-container {
-  border-left: none !important; /* Esto elimina la línea de la imagen 708d3c */
-}
-
-/* --- AJUSTES FINALES ZEROGASTO 2.5 --- */
-
-/* Quitar la línea blanca vertical */
-.loading-container {
-  border-left: none !important;
-}
-
 /* La Ruleta que gira */
 .spinner {
   width: 20px;
