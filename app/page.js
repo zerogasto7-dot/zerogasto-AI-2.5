@@ -220,94 +220,79 @@ export default function ZeroGastoApp() {
           
           {(displayedText || loading) && (
             <div className="flex-1 space-y-4">
-    
-                    <div className="flex flex-col gap-4">
-                      <div id="receta-content" className="bg-zinc-900/50 p-8 rounded relative min-h-[300px]">
-                        {showFinal && (
-                            <button onClick={toggleSpeech} className={`absolute top-4 right-4 p-2 rounded-full transition-all ${isSpeaking ? 'bg-red-500 text-white animate-pulse' : 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black'}`} title={isSpeaking ? "Detener" : "Leer receta"}>
-                            {isSpeaking ? '🔇 DETENER' : '🔊 LEER'}
-                            </button>
-                        )}
-
-                        {loading && !displayedText && (
-                          <div className="flex items-center gap-3 animate-fade-in pl-1"> 
-                            {/* Esta es tu ÚNICA línea pequeña y elegante (h-6) */}
-                            <div className="w-[2px] h-6 bg-emerald-500 rounded-full"></div>
-                            
-                            <div className="spinner"></div>
-                            
-                            <p className="text-white font-bold tracking-tight uppercase">
-                                 Calentando fogones M🔥Z
-                            </p>
-                          </div>
-                        )}
-    
-                        <div className="prose prose-invert max-w-none text-white normal-case recipe-body">
-                          <ReactMarkdown>{displayedText}</ReactMarkdown>
-                        </div>
-                      </div>
-                    </div> {/* <--- ASEGÚRATE DE QUE ESTOS DIVS ESTÉN CERRADOS */}
-
-                    {showFinal && (
-                        <div className="mt-8 pt-6 border-t border-white/10 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <span className="text-2xl">💡</span>
-                        <div>
-                            <p className="text-emerald-400 text-sm font-bold italic uppercase tracking-wider mb-1">Tip de Ahorro:</p>
-                            <p className="text-white text-sm normal-case">{extraTip}</p>
-                        </div>
-                      </div>
-
-                  {/* BOTÓN DE DESCARGA PDF */}
+              <div className="flex flex-col gap-4">
+                <div id="receta-content" className="bg-zinc-900/50 p-8 rounded relative min-h-[300px]">
                   {showFinal && (
-                    <button 
-                      onClick={downloadPDF}
-                      className="flex items-center justify-center gap-2 w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded transition-all shadow-lg"
-                    >
-                      <span>📥 DESCARGAR RECETA EN PDF</span>
+                    <button onClick={toggleSpeech} className={`absolute top-4 right-4 p-2 rounded-full transition-all ${isSpeaking ? 'bg-red-500 text-white animate-pulse' : 'bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-black'}`} title={isSpeaking ? "Detener" : "Leer receta"}>
+                      {isSpeaking ? '🔇 DETENER' : '🔊 LEER'}
                     </button>
                   )}
-                </div>
 
-                {showFinal && (
-                    <div className="bg-[#111] border border-white/10 p-4 rounded-lg animate-in fade-in duration-1000 mt-4">
-                        <p className="text-[10px] text-gray-500 font-bold tracking-widest mb-3">🛒 ¿TE FALTAN COSAS? BUSCA PRECIOS:</p>
-                        <div className="flex flex-wrap gap-3">
-                            <button onClick={() => shopIngredientes('plazavea')} className="flex-1 min-w-[80px] py-2 bg-[#FFD700] text-black font-bold text-xs rounded hover:opacity-80">PlazaVea</button>
-                            <button onClick={() => shopIngredientes('wong')} className="flex-1 min-w-[80px] py-2 bg-[#bf0909] text-white font-bold text-xs rounded hover:opacity-80">Wong</button>
-                            <button onClick={() => shopIngredientes('metro')} className="flex-1 min-w-[80px] py-2 bg-[#ffff00] text-black font-bold text-xs rounded hover:opacity-80 border border-black/10">Metro</button>
-                            <button onClick={() => shopIngredientes('tottus')} className="flex-1 min-w-[80px] py-2 bg-[#009e49] text-white font-bold text-xs rounded hover:opacity-80">Tottus</button>
-                            
-                            <a 
-                                href="https://amzn.to/4aWgNi1" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                className="flex-1 min-w-[80px] py-2 bg-[#232f3e] text-white font-bold text-xs rounded hover:bg-[#FF9900] hover:text-black transition-colors flex items-center justify-center border border-white/20"
-                            >
-                                📦 Amazon
-                            </a>
-                        </div>
+                  {loading && !displayedText && (
+                    <div className="flex items-center gap-3 animate-fade-in pl-1"> 
+                      <div className="w-[2px] h-6 bg-emerald-500 rounded-full"></div>
+                      <div className="spinner"></div>
+                      <p className="text-white font-bold tracking-tight uppercase">Calentando fogones M🔥Z</p>
                     </div>
-                )}
+                  )}
+
+                  <div className="prose prose-invert max-w-none text-white normal-case recipe-body">
+                    <ReactMarkdown>{displayedText}</ReactMarkdown>
+                  </div>
+                </div>
+              </div>
+
+              {showFinal && (
+                <div className="mt-8 pt-6 border-t border-white/10 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                  <span className="text-2xl">💡</span>
+                  <div>
+                    <p className="text-emerald-400 text-sm font-bold italic uppercase tracking-wider mb-1">Tip de Ahorro:</p>
+                    <p className="text-white text-sm normal-case">{extraTip}</p>
+                  </div>
+                </div>
+              )}
+
+              {showFinal && (
+                <button 
+                  onClick={downloadPDF}
+                  className="w-full bg-white text-black py-2 rounded font-bold mt-4 flex items-center justify-center gap-2"
+                >
+                  📥 DESCARGAR RECETA EN PDF
+                </button>
+              )}
             </div>
           )}
         </div>
-      </main>
 
-      {showPayModal && (
-        <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-6 backdrop-blur-sm">
-          <div className="bg-[#111] border border-emerald-500/30 p-10 rounded-2xl max-w-sm w-full text-center space-y-6 shadow-[0_0_50px_rgba(16,185,129,0.1)]">
-            <h2 className="text-3xl font-black italic text-white">PLAN <span className="text-emerald-400">ÉLITE</span></h2>
-            <div className="w-16 h-1 bg-emerald-500 mx-auto rounded-full"></div>
-            <p className="text-gray-400 text-xs tracking-widest leading-relaxed uppercase">Recetas ilimitadas y soporte prioritario.</p>
-            <div className="text-5xl font-black text-white tracking-tighter">$9.90</div>
-            <button onClick={() => { setIsPremium(true); setShowPayModal(false); }} className="w-full py-4 bg-emerald-500 text-black font-black rounded hover:scale-105 transition-transform">ACTIVAR AHORA</button>
-            <button onClick={() => setShowPayModal(false)} className="text-[10px] text-gray-500 hover:text-white transition-colors underline uppercase tracking-widest">Cerrar</button>
+        {showFinal && (
+          <div className="bg-[#111] border border-white/10 p-4 rounded-lg animate-in fade-in duration-1000 mt-4">
+            <p className="text-[10px] text-gray-500 font-bold tracking-widest mb-3">🛒 ¿TE FALTAN COSAS? BUSCA PRECIOS:</p>
+            <div className="flex flex-wrap gap-3">
+              <button onClick={() => shopIngredientes('plazavea')} className="flex-1 min-w-[80px] py-2 bg-[#FFD700] text-black font-bold text-xs rounded hover:opacity-80">PlazaVea</button>
+              <button onClick={() => shopIngredientes('wong')} className="flex-1 min-w-[80px] py-2 bg-[#bf0909] text-white font-bold text-xs rounded hover:opacity-80">Wong</button>
+              <button onClick={() => shopIngredientes('metro')} className="flex-1 min-w-[80px] py-2 bg-[#ffff00] text-black font-bold text-xs rounded hover:opacity-80 border border-black/10">Metro</button>
+              <button onClick={() => shopIngredientes('tottus')} className="flex-1 min-w-[80px] py-2 bg-[#009e49] text-white font-bold text-xs rounded hover:opacity-80">Tottus</button>
+              <a href="https://amzn.to/4aWgNi1" target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[80px] py-2 bg-[#232f3e] text-white font-bold text-xs rounded hover:bg-[#FF9900] hover:text-black transition-colors flex items-center justify-center border border-white/20">📦 Amazon</a>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <input type="file" ref={fileInputRef} hidden accept="image/*" onChange={handleImage} />
-      <input type="file" ref={docInputRef} hidden accept=".txt" onChange={handleDoc} />
+        {showPayModal && (
+          <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-6 backdrop-blur-sm">
+            <div className="bg-[#111] border border-emerald-500/30 p-10 rounded-2xl max-w-sm w-full text-center space-y-6 shadow-[0_0_50px_rgba(16,185,129,0.1)]">
+              <h2 className="text-3xl font-black italic text-white">PLAN <span className="text-emerald-400">ÉLITE</span></h2>
+              <div className="w-16 h-1 bg-emerald-500 mx-auto rounded-full"></div>
+              <p className="text-gray-400 text-xs tracking-widest leading-relaxed uppercase">Recetas ilimitadas y soporte prioritario.</p>
+              <div className="text-5xl font-black text-white tracking-tighter">$9.90</div>
+              <button onClick={() => { setIsPremium(true); setShowPayModal(false); }} className="w-full py-4 bg-emerald-500 text-black font-black rounded hover:scale-105 transition-transform">ACTIVAR AHORA</button>
+              <button onClick={() => setShowPayModal(false)} className="text-[10px] text-gray-500 hover:text-white transition-colors underline uppercase tracking-widest">Cerrar</button>
+            </div>
+          </div>
+        )}
+
+        <input type="file" ref={fileInputRef} hidden accept="image/*" onChange={handleImage} />
+        <input type="file" ref={docInputRef} hidden accept=".txt" onChange={handleDoc} />
+      </main>
     </div>
   );
 }
