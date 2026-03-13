@@ -150,34 +150,35 @@ export default function ZeroGastoApp() {
     const html2pdf = (await import('html2pdf.js')).default;
     const element = document.getElementById('receta-content');
     
-    // Clonamos el elemento para no afectar la vista del usuario en la web
+    // 1. Clonamos el elemento
     const clonedElement = element.cloneNode(true);
     
-    // Configuración estética para el PDF
-    clonedElement.style.padding = '40px';
-    clonedElement.style.color = '#1a1a1a'; // Negro suave
-    clonedElement.style.backgroundColor = '#ffffff';
-    clonedElement.style.textTransform = 'none'; // Quitar mayúsculas forzadas
+    // 2. ELIMINAMOS EL BOTÓN DE "LEER" DEL CLON PARA EL PDF
+    const btnLeer = clonedElement.querySelector('button');
+    if (btnLeer) {
+      btnLeer.remove();
+    }
     
-    // Forzamos a que todos los encabezados y textos sean negros en el clon
-    clonedElement.querySelectorAll('*').forEach(el => {
-      el.style.color = '#1a1a1a';
-      el.classList.remove('text-emerald-400', 'text-emerald-500', 'prose-invert', 'text-white');
+    // 3. Configuración estética agresiva para el PDF (Fondo blanco)
+    clonedElement.style.padding = '30px';
+    clonedElement.style.backgroundColor = '#ffffff';
+    
+    // 4. Forzamos a que TODO sea negro, quitando las clases de Tailwind
+    const allElements = clonedElement.querySelectorAll('*');
+    allElements.forEach(el => {
+      el.style.setProperty('color', '#000000', 'important');
+      el.classList.remove('text-emerald-400', 'text-emerald-500', 'text-white', 'prose-invert');
     });
 
     const opt = {
-      margin: 0,
+      margin: 10,
       filename: 'Receta-ZeroGasto.pdf',
       image: { type: 'jpeg', quality: 1 },
-      html2canvas: { 
-        scale: 3, // Mayor calidad de texto
-        letterRendering: true,
-        useCORS: true 
-      },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    // Descargar desde el clon invisible
+    // Descargar desde el clon invisible modificado
     await html2pdf().set(opt).from(clonedElement).save();
   };
 
@@ -234,7 +235,7 @@ export default function ZeroGastoApp() {
                     <div className="flex items-center gap-3 animate-fade-in pl-1"> 
                       <div className="w-[2px] h-6 bg-emerald-500 rounded-full"></div>
                       <div className="spinner"></div>
-                      <p className="text-white font-bold tracking-tight uppercase">Calentando fogones M🔥Z</p>
+                      <p className="text-white font-bold tracking-tight uppercase">Calentando fogones</p>
                     </div>
                   )}
 
