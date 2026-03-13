@@ -151,32 +151,35 @@ export default function ZeroGastoApp() {
     const html2pdf = (await import('html2pdf.js')).default;
     const element = document.getElementById('receta-content');
     
-    // Guardamos el estilo original para que el usuario no vea cambios en la web
-    const originalStyle = element.getAttribute('style');
+    // Clonamos el elemento para no afectar la vista del usuario en la web
+    const clonedElement = element.cloneNode(true);
     
-    // Forzamos temporalmente colores legibles para PDF (Fondo blanco, texto negro)
-    element.style.backgroundColor = 'white';
-    element.style.color = 'black';
-    element.querySelectorAll('*').forEach(el => el.style.color = 'black');
+    // Configuración estética para el PDF
+    clonedElement.style.padding = '40px';
+    clonedElement.style.color = '#1a1a1a'; // Negro suave
+    clonedElement.style.backgroundColor = '#ffffff';
+    clonedElement.style.textTransform = 'none'; // Quitar mayúsculas forzadas
+    
+    // Forzamos a que todos los encabezados y textos sean negros en el clon
+    clonedElement.querySelectorAll('*').forEach(el => {
+      el.style.color = '#1a1a1a';
+      el.classList.remove('text-emerald-400', 'text-emerald-500', 'prose-invert');
+    });
 
     const opt = {
-      margin:       0.5,
-      filename:     'Receta-ZeroGasto.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { 
-        scale: 2, 
-        backgroundColor: '#ffffff', 
+      margin: 0,
+      filename: 'Receta-ZeroGasto.pdf',
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: { 
+        scale: 3, // Mayor calidad de texto
+        letterRendering: true,
         useCORS: true 
       },
-      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     };
 
-    // Ejecutamos la descarga
-    await html2pdf().set(opt).from(element).save();
-
-    // Restauramos el diseño oscuro original de la app
-    element.setAttribute('style', originalStyle);
-    element.querySelectorAll('*').forEach(el => el.style.color = '');
+    // Descargar desde el clon invisible
+    await html2pdf().set(opt).from(clonedElement).save();
   };
 
   return (
