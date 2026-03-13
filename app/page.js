@@ -146,7 +146,6 @@ export default function ZeroGastoApp() {
     }
   };
 
-  // --- FUNCIÓN PDF CORREGIDA PARA EVITAR DESCARGA EN BLANCO ---
   const downloadPDF = async () => {
     const html2pdf = (await import('html2pdf.js')).default;
     const element = document.getElementById('receta-content');
@@ -163,7 +162,7 @@ export default function ZeroGastoApp() {
     // Forzamos a que todos los encabezados y textos sean negros en el clon
     clonedElement.querySelectorAll('*').forEach(el => {
       el.style.color = '#1a1a1a';
-      el.classList.remove('text-emerald-400', 'text-emerald-500', 'prose-invert');
+      el.classList.remove('text-emerald-400', 'text-emerald-500', 'prose-invert', 'text-white');
     });
 
     const opt = {
@@ -235,7 +234,7 @@ export default function ZeroGastoApp() {
                     <div className="flex items-center gap-3 animate-fade-in pl-1"> 
                       <div className="w-[2px] h-6 bg-emerald-500 rounded-full"></div>
                       <div className="spinner"></div>
-                      <p className="text-white font-bold tracking-tight uppercase">Calentando fogones 🔥 </p>
+                      <p className="text-white font-bold tracking-tight uppercase">Calentando fogones M🔥Z</p>
                     </div>
                   )}
 
