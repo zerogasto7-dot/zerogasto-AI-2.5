@@ -13,10 +13,15 @@ const geistMono = Geist_Mono({
 });
 
 // Configuración de Metadata (Sin themeColor aquí)
-export const metadata: Metadata = {
-  title: "ZeroGasto 2.5",
-  description: "IA de aprovechamiento",
-  manifest: "/manifest.json",
+export const metadata = {
+  title: 'ZeroGasto 2.5 - Recetas Inteligentes con IA',
+  description: 'Ahorra dinero y evita el desperdicio. Genera recetas mágicas con los ingredientes que tienes en casa usando Inteligencia Artificial.',
+  keywords: ['recetas con ingredientes en casa', 'ahorro cocina', 'inteligencia artificial cocina', 'ZeroGasto', 'plan elite'],
+  openGraph: {
+    title: 'ZeroGasto 2.5',
+    description: '¡Deja de tirar comida! Sube una foto de tu refri y cocina algo increíble hoy.',
+    type: 'website',
+  },
 };
 
 // Nueva exportación Viewport (Esto quita los avisos de Vercel)

@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 export default function ZeroGastoApp() {
+  const [tiktokScript, setTiktokScript] = useState('');
   const [input, setInput] = useState('');
   const [displayedText, setDisplayedText] = useState('');
   const [extraTip, setExtraTip] = useState('');
@@ -182,6 +183,15 @@ export default function ZeroGastoApp() {
     await html2pdf().set(opt).from(clonedElement).save();
   };
 
+  const generateTikTokScript = () => {
+    const hook = "¡No tires eso! 🛑";
+    const body = displayedText.substring(0, 100); 
+    const script = `🎬 GUION VIRAL TIKTOK:\n\n[HOOK]: ${hook} ¿Tienes ${input}? ¡Hagamos magia!\n\n[PASO CLAVE]: ${body}...\n\n[CIERRE]: Mira la receta completa en ZeroGasto.link 🚀\n\n#ZeroGasto #RecetasIA #Ahorro #CocinaFacil`;
+    
+    setTiktokScript(script);
+    alert("¡Guion generado! Revisa debajo de la receta.");
+};
+
   return (
     <div className="min-h-screen bg-black text-white p-4 font-sans uppercase">
       <header className="max-w-6xl mx-auto py-6 flex justify-between items-center border-b border-white/10">
@@ -256,29 +266,82 @@ export default function ZeroGastoApp() {
               )}
 
               {showFinal && (
-                <button 
-                  onClick={downloadPDF}
-                  className="w-full bg-white text-black py-2 rounded font-bold mt-4 flex items-center justify-center gap-2"
-                >
-                  📥 DESCARGAR RECETA EN PDF
-                </button>
+                <>
+                  <div className="flex gap-2 mt-4">
+                    <button 
+                      onClick={downloadPDF}
+                      className="flex-1 bg-white text-black py-2 rounded font-bold flex items-center justify-center gap-2 hover:bg-gray-200"
+                    >
+                      📥 PDF
+                    </button>
+                    <button 
+                      onClick={generateTikTokScript}
+                      className="flex-1 bg-[#fe2c55] text-white py-2 rounded font-bold flex items-center justify-center gap-2 hover:opacity-90"
+                    >
+                      🎵 TIKTOK SCRIPT
+                    </button>
+                  </div>
+
+                  {tiktokScript && (
+                    <div className="mt-4 p-4 bg-zinc-800 border border-[#fe2c55]/30 rounded text-[10px] normal-case animate-in slide-in-from-right-4">
+                      <p className="font-black text-[#fe2c55] mb-2 uppercase">🎬 Tu Guion Viral:</p>
+                      <p className="text-white whitespace-pre-line">{tiktokScript}</p>
+                    </div>
+                  )}
+
+                  {/* AQUÍ MANTENEMOS EL SEO (No se ve en pantalla, pero Google lo lee) */}
+                  <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                      __html: JSON.stringify({
+                        "@context": "https://schema.org/",
+                        "@type": "Recipe",
+                        "name": "Receta Mágica ZeroGasto",
+                        "author": { "@type": "Organization", "name": "ZeroGasto 2.5" },
+                        "description": "Receta generada por IA para evitar el desperdicio.",
+                        "recipeIngredient": input.split(','),
+                        "instructions": displayedText,
+                        "publisher": { "@type": "Organization", "name": "ZeroGasto Elite" }
+                      })
+                    }}
+                  />
+                </>
+              )}
+
+        {showFinal && (
+                <div className="bg-[#111] border border-white/10 p-4 rounded-lg animate-in fade-in duration-1000 mt-4">
+                  <p className="text-[10px] text-gray-500 font-bold tracking-widest mb-3">🛒 ¿TE FALTAN COSAS? BUSCA PRECIOS:</p>
+                  <div className="flex flex-wrap gap-3">
+                    <button onClick={() => shopIngredientes('plazavea')} className="flex-1 min-w-[80px] py-2 bg-[#FFD700] text-black font-bold text-xs rounded hover:opacity-80">PlazaVea</button>
+                    <button onClick={() => shopIngredientes('wong')} className="flex-1 min-w-[80px] py-2 bg-[#bf0909] text-white font-bold text-xs rounded hover:opacity-80">Wong</button>
+                    <button onClick={() => shopIngredientes('metro')} className="flex-1 min-w-[80px] py-2 bg-[#ffff00] text-black font-bold text-xs rounded hover:opacity-80 border border-black/10">Metro</button>
+                    <button onClick={() => shopIngredientes('tottus')} className="flex-1 min-w-[80px] py-2 bg-[#009e49] text-white font-bold text-xs rounded hover:opacity-80">Tottus</button>
+                    <a href="https://amzn.to/4aWgNi1" target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[80px] py-2 bg-[#232f3e] text-white font-bold text-xs rounded hover:bg-[#FF9900] hover:text-black transition-colors flex items-center justify-center border border-white/20">📦 Amazon</a>
+                  </div>
+                </div>
+              )}
+
+              {/* Marcado SEO para Google - Invisible */}
+              {showFinal && (
+                <script
+                  type="application/ld+json"
+                  dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                      "@context": "https://schema.org/",
+                      "@type": "Recipe",
+                      "name": "Receta Mágica ZeroGasto",
+                      "author": { "@type": "Organization", "name": "ZeroGasto 2.5" },
+                      "description": "Receta generada por IA para evitar el desperdicio.",
+                      "recipeIngredient": input.split(','),
+                      "instructions": displayedText,
+                      "publisher": { "@type": "Organization", "name": "ZeroGasto Elite" }
+                    })
+                  }}
+                />
               )}
             </div>
           )}
         </div>
-
-        {showFinal && (
-          <div className="bg-[#111] border border-white/10 p-4 rounded-lg animate-in fade-in duration-1000 mt-4">
-            <p className="text-[10px] text-gray-500 font-bold tracking-widest mb-3">🛒 ¿TE FALTAN COSAS? BUSCA PRECIOS:</p>
-            <div className="flex flex-wrap gap-3">
-              <button onClick={() => shopIngredientes('plazavea')} className="flex-1 min-w-[80px] py-2 bg-[#FFD700] text-black font-bold text-xs rounded hover:opacity-80">PlazaVea</button>
-              <button onClick={() => shopIngredientes('wong')} className="flex-1 min-w-[80px] py-2 bg-[#bf0909] text-white font-bold text-xs rounded hover:opacity-80">Wong</button>
-              <button onClick={() => shopIngredientes('metro')} className="flex-1 min-w-[80px] py-2 bg-[#ffff00] text-black font-bold text-xs rounded hover:opacity-80 border border-black/10">Metro</button>
-              <button onClick={() => shopIngredientes('tottus')} className="flex-1 min-w-[80px] py-2 bg-[#009e49] text-white font-bold text-xs rounded hover:opacity-80">Tottus</button>
-              <a href="https://amzn.to/4aWgNi1" target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[80px] py-2 bg-[#232f3e] text-white font-bold text-xs rounded hover:bg-[#FF9900] hover:text-black transition-colors flex items-center justify-center border border-white/20">📦 Amazon</a>
-            </div>
-          </div>
-        )}
 
         {showPayModal && (
           <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-6 backdrop-blur-sm">
