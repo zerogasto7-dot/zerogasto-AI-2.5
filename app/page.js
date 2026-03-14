@@ -152,18 +152,28 @@ export default function ZeroGastoApp() {
     const element = document.getElementById('receta-content');
     const clonedElement = element.cloneNode(true);
     
-    // Quitar el botón de leer
+    // 1. Quitar el botón de leer
     const btnLeer = clonedElement.querySelector('button');
     if (btnLeer) btnLeer.remove();
     
-    // INYECCIÓN DE CSS EXTREMO PARA EL PDF
-    const style = document.createElement('style');
-    style.innerHTML = `
-      * { color: #000000 !important; }
-      h1, h2, h3, h4, h5, h6, p, span, li, strong, em { color: #000000 !important; }
-    `;
-    clonedElement.appendChild(style);
+    // 2. ELIMINAR COLORES DE TAILWIND DE RAÍZ
+    // Forzamos el contenedor principal a negro
+    clonedElement.style.setProperty('color', '#000000', 'important');
     
+    // Buscamos todos los elementos dentro del PDF
+    const allElements = clonedElement.querySelectorAll('*');
+    allElements.forEach(el => {
+      // Si el elemento tiene clases, le borramos las que den color verde o blanco
+      if (typeof el.className === 'string') {
+        el.className = el.className.replace(/text-emerald-\d+/g, '');
+        el.className = el.className.replace(/text-green-\d+/g, '');
+        el.className = el.className.replace(/text-white/g, '');
+      }
+      // Le clavamos el color negro directamente a la etiqueta
+      el.style.setProperty('color', '#000000', 'important');
+    });
+
+    // 3. Fondo blanco
     clonedElement.style.padding = '40px';
     clonedElement.style.backgroundColor = '#ffffff';
 
@@ -179,20 +189,27 @@ export default function ZeroGastoApp() {
   };
 
   const generateTikTokScript = () => {
-    // 1. Detección de ingredientes más inteligente
+    // 1. Detección de ingredientes (si está vacío, pone texto por defecto)
     let ingredientes = input.trim() ? input.split(',').slice(0, 2).join(' y ') : 'lo que tienes en la nevera';
     
-    // 2. Saltarnos el saludo educado del Chef
+    // 2. Buscar la palabra clave para saltar el saludo
     let textoLimpio = displayedText;
-    const inicioPaso = textoLimpio.indexOf('1.'); // Busca dónde empieza el paso 1
+    let indexAccion = textoLimpio.toLowerCase().indexOf('procedimiento');
     
-    if (inicioPaso !== -1) {
-        textoLimpio = textoLimpio.substring(inicioPaso); // Corta desde el paso 1
-    } else if (textoLimpio.length > 100) {
-        textoLimpio = textoLimpio.substring(90); // Fallback: se salta las primeras 90 letras del saludo
+    if (indexAccion === -1) {
+        indexAccion = textoLimpio.toLowerCase().indexOf('paso a paso');
     }
 
-    const resumenPasos = textoLimpio.substring(0, 120).replace(/\n/g, ' ') + "...";
+    if (indexAccion !== -1) {
+        // Si encuentra la palabra, corta el texto desde ahí, y suma unos caracteres para saltar el título
+        textoLimpio = textoLimpio.substring(indexAccion + 20); 
+    } else {
+        // Fallback drástico: si la IA se pone creativa y no usa esas palabras, corta los primeros 300 caracteres
+        textoLimpio = textoLimpio.substring(300);
+    }
+
+    // Limpiamos asteriscos y saltos de línea para que quede un texto limpio de 120 caracteres
+    const resumenPasos = textoLimpio.replace(/\*/g, '').replace(/\n/g, ' ').trim().substring(0, 120) + "...";
 
     // 3. Generar script
     const script = `🎬 GUION VIRAL TIKTOK:
