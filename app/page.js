@@ -278,7 +278,7 @@ export default function ZeroGastoApp() {
                     <div className="flex items-center gap-3 animate-fade-in pl-1"> 
                       <div className="w-[2px] h-6 bg-emerald-500 rounded-full"></div>
                       <div className="spinner"></div>
-                      <p className="text-white font-bold tracking-tight uppercase">Calentando fogones</p>
+                      <p className="text-white font-bold tracking-tight uppercase">...</p>
                     </div>
                   )}
 
