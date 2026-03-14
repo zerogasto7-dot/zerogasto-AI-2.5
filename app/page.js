@@ -150,26 +150,22 @@ export default function ZeroGastoApp() {
   const downloadPDF = async () => {
     const html2pdf = (await import('html2pdf.js')).default;
     const element = document.getElementById('receta-content');
-    
-    // 1. Clonamos el elemento
     const clonedElement = element.cloneNode(true);
     
-    // 2. ELIMINAMOS EL BOTÓN DE "LEER" DEL CLON PARA EL PDF
+    // Quitar el botón de leer
     const btnLeer = clonedElement.querySelector('button');
-    if (btnLeer) {
-      btnLeer.remove();
-    }
+    if (btnLeer) btnLeer.remove();
     
-    // 3. Configuración estética agresiva para el PDF (Fondo blanco)
-    clonedElement.style.padding = '30px';
+    // INYECCIÓN DE CSS EXTREMO PARA EL PDF
+    const style = document.createElement('style');
+    style.innerHTML = `
+      * { color: #000000 !important; }
+      h1, h2, h3, h4, h5, h6, p, span, li, strong, em { color: #000000 !important; }
+    `;
+    clonedElement.appendChild(style);
+    
+    clonedElement.style.padding = '40px';
     clonedElement.style.backgroundColor = '#ffffff';
-    
-    // 4. Forzamos a que TODO sea negro, quitando las clases de Tailwind
-    const allElements = clonedElement.querySelectorAll('*');
-    allElements.forEach(el => {
-      el.style.setProperty('color', '#000000', 'important');
-      el.classList.remove('text-emerald-400', 'text-emerald-500', 'text-white', 'prose-invert');
-    });
 
     const opt = {
       margin: 10,
@@ -179,32 +175,38 @@ export default function ZeroGastoApp() {
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
 
-    // Descargar desde el clon invisible modificado
     await html2pdf().set(opt).from(clonedElement).save();
   };
 
   const generateTikTokScript = () => {
-    // 1. Extraemos los primeros ingredientes para el Hook
-    const ingredientesPrincipales = input.split(',').slice(0, 2).join(' y ');
+    // 1. Detección de ingredientes más inteligente
+    let ingredientes = input.trim() ? input.split(',').slice(0, 2).join(' y ') : 'lo que tienes en la nevera';
+    
+    // 2. Saltarnos el saludo educado del Chef
+    let textoLimpio = displayedText;
+    const inicioPaso = textoLimpio.indexOf('1.'); // Busca dónde empieza el paso 1
+    
+    if (inicioPaso !== -1) {
+        textoLimpio = textoLimpio.substring(inicioPaso); // Corta desde el paso 1
+    } else if (textoLimpio.length > 100) {
+        textoLimpio = textoLimpio.substring(90); // Fallback: se salta las primeras 90 letras del saludo
+    }
 
-    // 2. Extraemos un resumen real de la receta generada
-    const resumenPasos = displayedText.length > 50 
-        ? displayedText.substring(0, 120) + "..." 
-        : "una receta increíble";
+    const resumenPasos = textoLimpio.substring(0, 120).replace(/\n/g, ' ') + "...";
 
-    // 3. Creamos el guion DINÁMICO
+    // 3. Generar script
     const script = `🎬 GUION VIRAL TIKTOK:
 
-[HOOK]: ¡No tires eso! 🛑 ¿Tienes ${ingredientesPrincipales || 'estos ingredientes'}? ¡Hagamos magia!
+[HOOK]: ¡No tires eso! 🛑 ¿Tienes ${ingredientes}? ¡Hagamos magia!
 
 [PASO CLAVE]: Hoy vamos a preparar una receta de aprovechamiento. El secreto está en: ${resumenPasos}
 
 [CIERRE]: Si quieres ver las cantidades exactas y el PDF, entra a ZeroGasto.link 🚀
 
 #ZeroGasto #RecetasIA #Ahorro #CocinaFacil`;
-
+    
     setTiktokScript(script);
-};
+  };
 
   return (
     <div className="min-h-screen bg-black text-white p-4 font-sans uppercase">
