@@ -184,12 +184,26 @@ export default function ZeroGastoApp() {
   };
 
   const generateTikTokScript = () => {
-    const hook = "¡No tires eso! 🛑";
-    const body = displayedText.substring(0, 100); 
-    const script = `🎬 GUION VIRAL TIKTOK:\n\n[HOOK]: ${hook} ¿Tienes ${input}? ¡Hagamos magia!\n\n[PASO CLAVE]: ${body}...\n\n[CIERRE]: Mira la receta completa en ZeroGasto.link 🚀\n\n#ZeroGasto #RecetasIA #Ahorro #CocinaFacil`;
-    
+    // 1. Extraemos los primeros ingredientes para el Hook
+    const ingredientesPrincipales = input.split(',').slice(0, 2).join(' y ');
+
+    // 2. Extraemos un resumen real de la receta generada
+    const resumenPasos = displayedText.length > 50 
+        ? displayedText.substring(0, 120) + "..." 
+        : "una receta increíble";
+
+    // 3. Creamos el guion DINÁMICO
+    const script = `🎬 GUION VIRAL TIKTOK:
+
+[HOOK]: ¡No tires eso! 🛑 ¿Tienes ${ingredientesPrincipales || 'estos ingredientes'}? ¡Hagamos magia!
+
+[PASO CLAVE]: Hoy vamos a preparar una receta de aprovechamiento. El secreto está en: ${resumenPasos}
+
+[CIERRE]: Si quieres ver las cantidades exactas y el PDF, entra a ZeroGasto.link 🚀
+
+#ZeroGasto #RecetasIA #Ahorro #CocinaFacil`;
+
     setTiktokScript(script);
-    alert("¡Guion generado! Revisa debajo de la receta.");
 };
 
   return (
