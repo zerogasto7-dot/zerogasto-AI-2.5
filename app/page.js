@@ -14,13 +14,14 @@ export default function ZeroGastoApp() {
   const [showFinal, setShowFinal] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [tipAhorroText, setTipAhorroText] = useState("");
 
   const fileInputRef = useRef(null);
   const docInputRef = useRef(null);
   const timerRef = useRef(null);
 
   useEffect(() => {
-    return () => {
+    return () => { 
       if (timerRef.current) clearInterval(timerRef.current);
       if (window.speechSynthesis) window.speechSynthesis.cancel();
     };
@@ -133,7 +134,17 @@ export default function ZeroGastoApp() {
         body: JSON.stringify({ message: input, image: imagePreview }),
       });
       const data = await res.json();
+      const rawTip = data.tip_ahorro || "Aplica la regla PEPS (Primero en Entrar, Primero en Salir) en tu nevera. Revisa los botones de abajo para conseguir al mejor precio lo que te falte.";
       
+      let i = 0;
+      setTipAhorroText(""); // Limpiamos antes de empezar
+
+      const intervalTip = setInterval(() => {
+        setTipAhorroText((prev) => prev + rawTip.charAt(i));
+        i++;
+        if (i >= rawTip.length) clearInterval(intervalTip);
+        }, 30); // Velocidad de escritura del tip
+    
       const parts = data.text.split("|||");
       const recipeBody = parts[0] || "Hubo un error en la receta.";
       const recipeTip = parts[1] ? parts[1].trim() : "Planifica tus comidas semanalmente.";
@@ -306,13 +317,26 @@ export default function ZeroGastoApp() {
                 </div>
               </div>
 
+              {/* SECCIÓN DE TIP DE AHORRO CON IA Y EFECTO TYPEWRITER */}
               {showFinal && (
-                <div className="mt-8 pt-6 border-t border-white/10 flex items-start gap-3 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                  <span className="text-2xl">💡</span>
-                  <div>
-                    <p className="text-emerald-400 text-sm font-bold italic uppercase tracking-wider mb-1">Tip de Ahorro:</p>
-                    <p className="text-white text-sm normal-case">{extraTip}</p>
-                  </div>
+                <div className="mt-6 p-4 border-l-4 border-emerald-500 bg-emerald-500/5 rounded-r-lg animate-in fade-in duration-1000">
+                  <p className="text-[10px] font-black text-emerald-400 tracking-widest uppercase mb-2 flex items-center gap-2">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    Tip de Ahorro Profesional:
+                  </p>
+                  <p className="text-gray-300 text-xs italic leading-relaxed">
+                    {/* Aquí usamos la lógica de Typewriter (ajusta el nombre de tu variable de estado) */}
+                    "{tipAhorroText}" 
+                    <span className="animate-pulse ml-1 text-emerald-500">|</span>
+                  </p>
+                  
+                  {/* CTA sutil para los enlaces */}
+                  <p className="mt-3 text-[9px] text-gray-500 font-bold uppercase tracking-tighter">
+                    👉 Revisa los botones de abajo para conseguir tus faltantes al mejor precio.
+                  </p>
                 </div>
               )}
 
@@ -336,77 +360,77 @@ export default function ZeroGastoApp() {
                   {tiktokScript && (
                     <div className="mt-4 p-4 bg-zinc-900/50 border border-[#fe2c55]/20 rounded-xl">
                       <p className="font-black text-[#fe2c55] mb-2 text-[10px] tracking-widest">
-                        🎬 Tu Guion Viral: {/* Quitamos 'uppercase' de aquí si lo tenías */}
+                        🎬 TU GUION VIRAL:
                       </p>
-                      <p className="text-white text-[11px] whitespace-pre-line leading-relaxed opacity-90 italic">
-                        {tiktokScript} {/* El texto aquí ahora respetará las minúsculas */}
-                      </p>
-                      
-                      {/* Tu botón de copiar */}
+                      <div className="text-white text-[11px] leading-relaxed opacity-90">
+                        {/* Usamos una función simple para capitalizar si viene todo en mayúsculas, 
+                            o simplemente ajustamos el prompt en la API */}
+                        <p className="whitespace-pre-line">
+                          {tiktokScript.toLowerCase().replace(/(^\w|\.\s+\w)/gm, (match) => match.toUpperCase())}
+                        </p>
+                      </div>
                       <button 
                         onClick={copyToClipboard}
-                        className="mt-4 w-full py-3 bg-[#fe2c55] text-white text-[10px] font-bold rounded-lg uppercase tracking-widest"
+                        className="mt-4 w-full py-3 bg-[#fe2c55] text-white text-[10px] font-bold rounded-lg uppercase tracking-widest hover:bg-[#ff3b5c] transition-colors"
                       >
                         Copiar Guion 📋
                       </button>
                     </div>
                   )}
 
-                  {/* SECCIÓN DE TIKTOK (Asegúrate de que termine así) */}
-          {tiktokScript && (
-            <div className="mt-4 p-4 bg-zinc-900/50 border border-[#fe2c55]/20 rounded-xl">
-              <p className="font-black text-[#fe2c55] mb-2 text-[10px] tracking-widest">
-                🎬 Tu Guion Viral:
-              </p>
-              <p className="text-white text-[11px] whitespace-pre-line leading-relaxed opacity-90 italic">
-                {tiktokScript}
-              </p>
-              <button 
-                onClick={copyToClipboard}
-                className="mt-4 w-full py-3 bg-[#fe2c55] text-white text-[10px] font-bold rounded-lg uppercase tracking-widest"
-              >
-                Copiar Guion 📋
-              </button>
-            </div>
-          )}
+                  {/* AQUÍ MANTENEMOS EL SEO (No se ve en pantalla, pero Google lo lee) */}
+                  <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                      __html: JSON.stringify({
+                        "@context": "https://schema.org/",
+                        "@type": "Recipe",
+                        "name": "Receta Mágica ZeroGasto",
+                        "author": { "@type": "Organization", "name": "ZeroGasto 2.5" },
+                        "description": "Receta generada por IA para evitar el desperdicio.",
+                        "recipeIngredient": input.split(','),
+                        "instructions": displayedText,
+                        "publisher": { "@type": "Organization", "name": "ZeroGasto Elite" }
+                      })
+                    }}
+                  />
+                </>
+              )}
 
-          {/* SECCIÓN DE TIENDAS */}
-          {showFinal && (
-            <div className="bg-[#111] border border-white/10 p-4 rounded-lg animate-in fade-in duration-1000 mt-4">
-              <p className="text-[10px] text-gray-500 font-bold tracking-widest mb-3">🛒 ¿TE FALTAN COSAS? BUSCA PRECIOS:</p>
-              <div className="flex flex-wrap gap-3">
-                <button onClick={() => shopIngredientes('plazavea')} className="flex-1 min-w-[80px] py-2 bg-[#FFD700] text-black font-bold text-xs rounded hover:opacity-80">PlazaVea</button>
-                <button onClick={() => shopIngredientes('wong')} className="flex-1 min-w-[80px] py-2 bg-[#bf0909] text-white font-bold text-xs rounded hover:opacity-80">Wong</button>
-                <button onClick={() => shopIngredientes('metro')} className="flex-1 min-w-[80px] py-2 bg-[#ffff00] text-black font-bold text-xs rounded hover:opacity-80 border border-black/10">Metro</button>
-                <button onClick={() => shopIngredientes('tottus')} className="flex-1 min-w-[80px] py-2 bg-[#009e49] text-white font-bold text-xs rounded hover:opacity-80">Tottus</button>
-                <a href="https://amzn.to/4aWgNi1" target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[80px] py-2 bg-[#232f3e] text-white font-bold text-xs rounded hover:bg-[#FF9900] hover:text-black transition-colors flex items-center justify-center border border-white/20">📦 Amazon</a>
-              </div>
-            </div>
-          )}
+        {showFinal && (
+                <div className="bg-[#111] border border-white/10 p-4 rounded-lg animate-in fade-in duration-1000 mt-4">
+                  <p className="text-[10px] text-gray-500 font-bold tracking-widest mb-3">🛒 ¿TE FALTAN COSAS? BUSCA PRECIOS:</p>
+                  <div className="flex flex-wrap gap-3">
+                    <button onClick={() => shopIngredientes('plazavea')} className="flex-1 min-w-[80px] py-2 bg-[#FFD700] text-black font-bold text-xs rounded hover:opacity-80">PlazaVea</button>
+                    <button onClick={() => shopIngredientes('wong')} className="flex-1 min-w-[80px] py-2 bg-[#bf0909] text-white font-bold text-xs rounded hover:opacity-80">Wong</button>
+                    <button onClick={() => shopIngredientes('metro')} className="flex-1 min-w-[80px] py-2 bg-[#ffff00] text-black font-bold text-xs rounded hover:opacity-80 border border-black/10">Metro</button>
+                    <button onClick={() => shopIngredientes('tottus')} className="flex-1 min-w-[80px] py-2 bg-[#009e49] text-white font-bold text-xs rounded hover:opacity-80">Tottus</button>
+                    <a href="https://amzn.to/4aWgNi1" target="_blank" rel="noopener noreferrer" className="flex-1 min-w-[80px] py-2 bg-[#232f3e] text-white font-bold text-xs rounded hover:bg-[#FF9900] hover:text-black transition-colors flex items-center justify-center border border-white/20">📦 Amazon</a>
+                  </div>
+                </div>
+              )}
 
-          {/* Marcado SEO final */}
-          {showFinal && (
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org/",
-                  "@type": "Recipe",
-                  "name": "Receta Mágica ZeroGasto",
-                  "author": { "@type": "Organization", "name": "ZeroGasto 2.5" },
-                  "description": "Receta generada por IA para evitar el desperdicio.",
-                  "recipeIngredient": input.split(','),
-                  "instructions": displayedText,
-                  "publisher": { "@type": "Organization", "name": "ZeroGasto Elite" }
-                })
-              }}
-            />
+              {/* Marcado SEO para Google - Invisible */}
+              {showFinal && (
+                <script
+                  type="application/ld+json"
+                  dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                      "@context": "https://schema.org/",
+                      "@type": "Recipe",
+                      "name": "Receta Mágica ZeroGasto",
+                      "author": { "@type": "Organization", "name": "ZeroGasto 2.5" },
+                      "description": "Receta generada por IA para evitar el desperdicio.",
+                      "recipeIngredient": input.split(','),
+                      "instructions": displayedText,
+                      "publisher": { "@type": "Organization", "name": "ZeroGasto Elite" }
+                    })
+                  }}
+                />
+              )}
+            </div>
           )}
         </div>
-      </main>
-    </div>
-  );
-}
 
         {showPayModal && (
           <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-6 backdrop-blur-sm">
