@@ -157,21 +157,30 @@ export default function ZeroGastoApp() {
     if (btnLeer) btnLeer.remove();
     
     // 2. ELIMINAR COLORES DE TAILWIND DE RAÍZ
-    // Forzamos el contenedor principal a negro
     clonedElement.style.setProperty('color', '#000000', 'important');
     
-    // Buscamos todos los elementos dentro del PDF
     const allElements = clonedElement.querySelectorAll('*');
     allElements.forEach(el => {
-      // Si el elemento tiene clases, le borramos las que den color verde o blanco
       if (typeof el.className === 'string') {
         el.className = el.className.replace(/text-emerald-\d+/g, '');
         el.className = el.className.replace(/text-green-\d+/g, '');
         el.className = el.className.replace(/text-white/g, '');
       }
-      // Le clavamos el color negro directamente a la etiqueta
       el.style.setProperty('color', '#000000', 'important');
     });
+
+    // ---------------------------------------------------------
+    // ¡AQUÍ VA EL CÓDIGO NUEVO! (Pégalo justo antes del punto 3)
+    const style = document.createElement('style');
+    style.innerHTML = `
+      * { color: #000000 !important; }
+      h1, h2, h3, h4, p, li { 
+        page-break-inside: avoid !important; 
+        break-inside: avoid !important;
+      }
+    `;
+    clonedElement.appendChild(style);
+    // ---------------------------------------------------------
 
     // 3. Fondo blanco
     clonedElement.style.padding = '40px';
@@ -187,14 +196,14 @@ export default function ZeroGastoApp() {
 
     await html2pdf().set(opt).from(clonedElement).save();
   };
-
+  
   const copyToClipboard = () => {
     if (tiktokScript) {
       navigator.clipboard.writeText(tiktokScript);
       // Opcional: un aviso visual rápido
       alert("¡Guion copiado! Listo para pegar en TikTok 📋");
     }
-  };
+  };  
 
   const generateTikTokScript = () => {
     // 1. Detección de ingredientes (si está vacío, pone texto por defecto)
