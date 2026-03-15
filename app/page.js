@@ -146,7 +146,7 @@ export default function ZeroGastoApp() {
       setLoading(false);
     }
   };
-
+  
   const downloadPDF = async () => {
     const html2pdf = (await import('html2pdf.js')).default;
     const element = document.getElementById('receta-content');
@@ -186,6 +186,14 @@ export default function ZeroGastoApp() {
     };
 
     await html2pdf().set(opt).from(clonedElement).save();
+  };
+
+  const copyToClipboard = () => {
+    if (tiktokScript) {
+      navigator.clipboard.writeText(tiktokScript);
+      // Opcional: un aviso visual rápido
+      alert("¡Guion copiado! Listo para pegar en TikTok 📋");
+    }
   };
 
   const generateTikTokScript = () => {
@@ -316,11 +324,23 @@ export default function ZeroGastoApp() {
                   </div>
 
                   {tiktokScript && (
-                    <div className="mt-4 p-4 bg-zinc-800 border border-[#fe2c55]/30 rounded text-[10px] normal-case animate-in slide-in-from-right-4">
-                      <p className="font-black text-[#fe2c55] mb-2 uppercase">🎬 Tu Guion Viral:</p>
-                      <p className="text-white whitespace-pre-line">{tiktokScript}</p>
-                    </div>
-                  )}
+                  <div className="mt-4 p-4 bg-zinc-900 border border-[#fe2c55]/30 rounded relative animate-in slide-in-from-right-4">
+                    <p className="font-black text-[#fe2c55] mb-2 uppercase text-[10px] tracking-widest flex items-center gap-2">
+                      🎬 Tu Guion Viral:
+                    </p>
+                    <p className="text-white text-[11px] whitespace-pre-line leading-relaxed italic opacity-90">
+                      {tiktokScript}
+                    </p>
+                    
+                    {/* BOTÓN DE COPIAR */}
+                    <button 
+                      onClick={copyToClipboard}
+                      className="mt-4 w-full py-2 bg-[#fe2c55]/10 border border-[#fe2c55] text-[#fe2c55] text-[10px] font-bold rounded hover:bg-[#fe2c55] hover:text-white transition-all uppercase tracking-tighter"
+                    >
+                      Copiar Guion 📋
+                    </button>
+                  </div>
+                )}
 
                   {/* AQUÍ MANTENEMOS EL SEO (No se ve en pantalla, pero Google lo lee) */}
                   <script
