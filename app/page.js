@@ -196,7 +196,7 @@ export default function ZeroGastoApp() {
 
     await html2pdf().set(opt).from(clonedElement).save();
   };
-  
+
   const copyToClipboard = () => {
     if (tiktokScript) {
       navigator.clipboard.writeText(tiktokScript);
@@ -229,13 +229,14 @@ export default function ZeroGastoApp() {
     const resumenPasos = textoLimpio.replace(/\*/g, '').replace(/\n/g, ' ').trim().substring(0, 120) + "...";
 
     // 3. Generar script
-    const script = `🎬 GUION VIRAL TIKTOK:
+    const script = `🎬 Tu guion viral:
+🎬 Guion viral TikTok:
 
-[HOOK]: ¡No tires eso! 🛑 ¿Tienes ${ingredientes}? ¡Hagamos magia!
+[Hook]: ¡No tires eso! 🛑 ¿Tienes ${ingredientes}? ¡Hagamos magia!
 
-[PASO CLAVE]: Hoy vamos a preparar una receta de aprovechamiento. El secreto está en: ${resumenPasos}
+[Paso clave]: Hoy vamos a preparar una receta de aprovechamiento. El secreto está en: ${resumenPasos}
 
-[CIERRE]: Si quieres ver las cantidades exactas y el PDF, entra a ZeroGasto.link 🚀
+[Cierre]: Si quieres ver las cantidades exactas y el PDF, entra a ZeroGasto.link 🚀
 
 #ZeroGasto #RecetasIA #Ahorro #CocinaFacil`;
     
@@ -333,23 +334,23 @@ export default function ZeroGastoApp() {
                   </div>
 
                   {tiktokScript && (
-                  <div className="mt-4 p-4 bg-zinc-900 border border-[#fe2c55]/30 rounded relative animate-in slide-in-from-right-4">
-                    <p className="font-black text-[#fe2c55] mb-2 uppercase text-[10px] tracking-widest flex items-center gap-2">
-                      🎬 Tu Guion Viral:
-                    </p>
-                    <p className="text-white text-[11px] whitespace-pre-line leading-relaxed italic opacity-90">
-                      {tiktokScript}
-                    </p>
-                    
-                    {/* BOTÓN DE COPIAR */}
-                    <button 
-                      onClick={copyToClipboard}
-                      className="mt-4 w-full py-2 bg-[#fe2c55]/10 border border-[#fe2c55] text-[#fe2c55] text-[10px] font-bold rounded hover:bg-[#fe2c55] hover:text-white transition-all uppercase tracking-tighter"
-                    >
-                      Copiar Guion 📋
-                    </button>
-                  </div>
-                )}
+                    <div className="mt-4 p-4 bg-zinc-900/50 border border-[#fe2c55]/20 rounded-xl">
+                      <p className="font-black text-[#fe2c55] mb-2 text-[10px] tracking-widest">
+                        🎬 Tu Guion Viral: {/* Quitamos 'uppercase' de aquí si lo tenías */}
+                      </p>
+                      <p className="text-white text-[11px] whitespace-pre-line leading-relaxed opacity-90 italic">
+                        {tiktokScript} {/* El texto aquí ahora respetará las minúsculas */}
+                      </p>
+                      
+                      {/* Tu botón de copiar */}
+                      <button 
+                        onClick={copyToClipboard}
+                        className="mt-4 w-full py-3 bg-[#fe2c55] text-white text-[10px] font-bold rounded-lg uppercase tracking-widest"
+                      >
+                        Copiar Guion 📋
+                      </button>
+                    </div>
+                  )}
 
                   {/* AQUÍ MANTENEMOS EL SEO (No se ve en pantalla, pero Google lo lee) */}
                   <script
