@@ -51,6 +51,8 @@ export async function POST(req) {
       |||
       Analiza imágenes solo cuando adjuntan una.
 
+      Al final de toda tu respuesta, escribe exactamente la palabra 'TIP_AHORRO:' seguida de un consejo culinario profesional corto y único basado en los ingredientes de esta receta, usando términos técnicos y animando a revisar los precios.
+
       Contexto: ${message || "Analiza la imagen y sorpréndeme"}`
     });
 

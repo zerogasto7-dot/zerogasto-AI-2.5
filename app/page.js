@@ -134,8 +134,16 @@ export default function ZeroGastoApp() {
         body: JSON.stringify({ message: input, image: imagePreview }),
       });
       const data = await res.json();
-      const rawTip = data.tip_ahorro || "Aplica la regla PEPS (Primero en Entrar, Primero en Salir) en tu nevera. Revisa los botones de abajo para conseguir al mejor precio lo que te falte.";
       
+      // 1. Tomamos todo el texto que manda la IA y lo cortamos usando la etiqueta secreta
+      const aiText = data.text || "";
+      const partes = aiText.split("TIP_AHORRO:");
+      
+      // 2. Separamos la receta del tip
+      const recipeBody = partes[0] ? partes[0].trim() : "Hubo un error en la receta.";
+      const rawTip = partes[1] ? partes[1].trim() : "Aplica la regla PEPS (Primero en Entrar, Primero en Salir) en tu nevera. Revisa los botones de abajo para conseguir al mejor precio lo que te falte.";
+      
+      // 3. Animamos el Tip de Ahorro
       let i = 0;
       setTipAhorroText(""); // Limpiamos antes de empezar
 
@@ -143,14 +151,12 @@ export default function ZeroGastoApp() {
         setTipAhorroText((prev) => prev + rawTip.charAt(i));
         i++;
         if (i >= rawTip.length) clearInterval(intervalTip);
-        }, 30); // Velocidad de escritura del tip
-    
-      const parts = data.text.split("|||");
-      const recipeBody = parts[0] || "Hubo un error en la receta.";
-      const recipeTip = parts[1] ? parts[1].trim() : "Planifica tus comidas semanalmente.";
+      }, 30); 
       
-      setExtraTip(recipeTip);
-      startTypewriter(recipeBody.trim());
+      // 4. Guardamos el tip para que el lector de voz (audio) lo lea y arrancamos la receta
+      setExtraTip(rawTip);
+      startTypewriter(recipeBody);
+
     } catch (e) {
       setDisplayedText("⚠️ Error de conexión con el Chef. Intenta de nuevo.");
     } finally {
