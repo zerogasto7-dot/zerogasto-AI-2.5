@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 // Configuración de Metadata (Sin themeColor aquí)
 export const metadata = {
   title: 'ZeroGasto 2.5 - Recetas Inteligentes con IA',
-  description: 'Ahorra dinero y evita el desperdicio. Genera recetas mágicas con los ingredientes que tienes en casa usando Inteligencia Artificial.',
+  description: 'Ahorra dinero y evita gastos extra. Genera recetas mágicas con los ingredientes que tienes en casa usando Inteligencia Artificial.',
   keywords: ['recetas con ingredientes en casa', 'ahorro cocina', 'inteligencia artificial cocina', 'ZeroGasto', 'plan elite'],
   openGraph: {
     title: 'ZeroGasto 2.5',
@@ -42,6 +43,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <Analytics /> {/* 👉 AQUÍ ES DONDE VA ✨ */}
       </body>
     </html>
   );
